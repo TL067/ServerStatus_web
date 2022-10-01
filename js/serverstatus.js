@@ -41,12 +41,11 @@ function bytesToSize(bytes, precision, si)
 	} else {
 		return bytes + ' B';
 	}
-	return ret;
-	/*if(si != 0) {
+	if(si != 0) {
 		return ret + 'B';
 	} else {
 		return ret + 'iB';
-	}*/
+	}
 }
 
 function uptime() {
@@ -112,7 +111,7 @@ function uptime() {
 			}
 
 			// Name
-			TableRow.children["name"].innerHTML = result.servers[i].name;
+			TableRow.children["name"].innerHTML = result.servers[i].alias;
 
 			// Type
 			TableRow.children["type"].innerHTML = result.servers[i].type;
@@ -156,14 +155,14 @@ function uptime() {
 				var trafficdiff_in = result.servers[i].network_in - result.servers[i].last_network_in;
 				var trafficdiff_out = result.servers[i].network_out - result.servers[i].last_network_out;
 				if(trafficdiff_in < 1024*1024*1024*1024)
-					monthtraffic += (trafficdiff_in/1024/1024/1024).toFixed(1) + "G";
+					monthtraffic += (trafficdiff_in/1024/1024/1024).toFixed(2) + "G";
 				else
-					monthtraffic += (trafficdiff_in/1024/1024/1024/1024).toFixed(1) + "T";
+					monthtraffic += (trafficdiff_in/1024/1024/1024/1024).toFixed(2) + "T";
 				monthtraffic += " | "
 				if(trafficdiff_out < 1024*1024*1024*1024)
-					monthtraffic += (trafficdiff_out/1024/1024/1024).toFixed(1) + "G";
+					monthtraffic += (trafficdiff_out/1024/1024/1024).toFixed(2) + "G";
 				else
-					monthtraffic += (trafficdiff_out/1024/1024/1024/1024).toFixed(1) + "T";
+					monthtraffic += (trafficdiff_out/1024/1024/1024/1024).toFixed(2) + "T";
 				TableRow.children["month_traffic"].children[0].children[0].className = "progress-bar progress-bar-success";
 				TableRow.children["month_traffic"].children[0].children[0].innerHTML = "<small>"+monthtraffic+"</small>";
 
@@ -193,14 +192,14 @@ function uptime() {
 				//Traffic
 				var trafficstr = "";
 				if(result.servers[i].network_in < 1024*1024*1024*1024)
-					trafficstr += (result.servers[i].network_in/1024/1024/1024).toFixed(1) + "G";
+					trafficstr += (result.servers[i].network_in/1024/1024/1024).toFixed(2) + "G";
                 else
-                    trafficstr += (result.servers[i].network_in/1024/1024/1024/1024).toFixed(1) + "T";
+                    trafficstr += (result.servers[i].network_in/1024/1024/1024/1024).toFixed(2) + "T";
 				trafficstr += " | "
 				if(result.servers[i].network_out < 1024*1024*1024*1024)
-				    trafficstr += (result.servers[i].network_out/1024/1024/1024).toFixed(1) + "G";
+				    trafficstr += (result.servers[i].network_out/1024/1024/1024).toFixed(2) + "G";
 				else
-					trafficstr += (result.servers[i].network_out/1024/1024/1024/1024).toFixed(1) + "T";
+					trafficstr += (result.servers[i].network_out/1024/1024/1024/1024).toFixed(2) + "T";
 				TableRow.children["traffic"].innerHTML = trafficstr;
 
 				// CPU
@@ -237,20 +236,7 @@ function uptime() {
 					TableRow.children["hdd"].children[0].children[0].className = "progress-bar progress-bar-success";
 				TableRow.children["hdd"].children[0].children[0].style.width = HDD + "%";
 				TableRow.children["hdd"].children[0].children[0].innerHTML = HDD + "%";
-				// IO Speed for HDD.
-				// IO， 过小的B字节单位没有意义
-				var io = "";
-				if(result.servers[i].io_read < 1024*1024)
-					io += parseInt(result.servers[i].io_read/1024) + "K";
-				else
-					io += parseInt(result.servers[i].io_read/1024/1024) + "M";
-				io += " / "
-				if(result.servers[i].io_write < 1024*1024)
-					io += parseInt(result.servers[i].io_write/1024) + "K";
-				else
-					io += parseInt(result.servers[i].io_write/1024/1024) + "M";
-				// Expand for HDD.
-				ExpandRow[0].children["expand_hdd"].innerHTML = "硬盘|读写: " + bytesToSize(result.servers[i].hdd_used*1024*1024, 2) + " / " + bytesToSize(result.servers[i].hdd_total*1024*1024, 2) + " | " + io;
+				ExpandRow[0].children["expand_hdd"].innerHTML = "硬盘: " + bytesToSize(result.servers[i].hdd_used*1024*1024, 2) + " / " + bytesToSize(result.servers[i].hdd_total*1024*1024, 2);
 
                 // delay time
 
