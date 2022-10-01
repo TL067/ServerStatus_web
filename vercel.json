@@ -1,0 +1,20 @@
+{
+  "routes": [
+    {
+      "src": "/json/stats.json",
+      "dest": "https://tz.167e.eu.org:8080/json/stats.json"
+    },
+    {
+      "src": "/detail",
+      "dest": "https://tz.167e.eu.org:8080/detail"
+    },
+    {
+      "src": "/map",
+      "dest": "https://tz.167e.eu.org:8080/map"
+    },
+    {
+      "src": "/i",
+      "dest": "https://tz.167e.eu.org:8080/i"
+    }
+  ]
+}
